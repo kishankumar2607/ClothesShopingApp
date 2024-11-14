@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">ClothesShoppingApp</string>
+    <string name="screen1">Choose Products</string>
+    <string name="screen2">Make Payment</string>
+    <string name="screen3">Get Your Order</string>
+    <string name="screen1desc">Browse through various products, select your favorites, and add them to your cart for a seamless shopping experience.</string>
+    <string name="screen2desc">Choose your preferred payment method, securely enter details, and complete the transaction to proceed with your purchase.</string>
+    <string name="screen3desc">After payment, your order will be processed, shipped, and delivered to your address with tracking information provided.</string>
+    <string name="startDesc">Discover amazing deals on top-quality products. Shop smart and save big on every purchase!</string>
+    <string name="skip">Skip</string>
+    <string name="back">Back</string>
+    <string name="next">Next</string>
+    <string name="shop_more_pay_less">Shop More Pay Less</string>
+    <string name="get_started">Get Started</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="username_or_email">Username or Email</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="create_an_account">Create An Account</string>
+    <string name="or_continue_with">- OR Continue with -</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">Forgot Password?</string>
+    <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="create_account">Create Account</string>
+    <string name="i_already_have_an_account">I Already Have an Account</string>
+    <string name="button_you_are_agree_to_terms">button, you are agree to terms.</string>
+    <string name="register">Register</string>
+    <string name="by_clicking_the">By clicking the</string>
+    <string name="submit">Submit</string>
+    <string name="send_message_to_reset">* We will send you a message to set or reset your new password</string>
+    <string name="enter_your_email_address">Enter your email address</string>
+    <string name="client_id">996925543440-l5p9u0bpunn9rug3pt8mgop1mtvg0hsn.apps.googleusercontent.com</string>
+</resources>

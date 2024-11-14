@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="radical_red">#F83758</color>
+    <color name="dodger_blue">#4392F9</color>
+    <color name="brink_pink">#FD6E87</color>
+    <color name="alizarin_crimson">#EB3030</color>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey">#A8A8A9</color>
+</resources>
