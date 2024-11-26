@@ -1,4 +1,4 @@
-package com.example.clothesshoppingapp;
+package com.example.clothesshoppingapp.activities;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.clothesshoppingapp.R;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;

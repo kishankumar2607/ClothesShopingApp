@@ -1,4 +1,4 @@
-package com.example.clothesshoppingapp;
+package com.example.clothesshoppingapp.fragments;
 
 import android.os.Bundle;
 
@@ -12,6 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.clothesshoppingapp.models.Product;
+import com.example.clothesshoppingapp.adapters.ProductAdapter;
+import com.example.clothesshoppingapp.R;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;

@@ -1,22 +1,22 @@
-package com.example.clothesshoppingapp;
+package com.example.clothesshoppingapp.activities;
 
 import android.os.Bundle;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.text.Html;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
+
 import androidx.viewpager.widget.ViewPager;
+
+import com.example.clothesshoppingapp.GetStarted;
+import com.example.clothesshoppingapp.R;
+import com.example.clothesshoppingapp.adapters.ViewPagerAdapter;
+
 public class NavigationActivity extends AppCompatActivity {
     ViewPager slideViewPager;
     LinearLayout dotIndicator;

@@ -1,4 +1,4 @@
-package com.example.clothesshoppingapp;
+package com.example.clothesshoppingapp.activities;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +14,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.example.clothesshoppingapp.fragments.CartFragment;
+import com.example.clothesshoppingapp.fragments.HomeFragment;
+import com.example.clothesshoppingapp.R;
+import com.example.clothesshoppingapp.fragments.SearchFragment;
+import com.example.clothesshoppingapp.fragments.SettingFragment;
+import com.example.clothesshoppingapp.fragments.WishListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import java.util.Calendar;

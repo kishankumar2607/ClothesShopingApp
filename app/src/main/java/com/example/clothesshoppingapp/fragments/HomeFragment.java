@@ -1,4 +1,4 @@
-package com.example.clothesshoppingapp;
+package com.example.clothesshoppingapp.fragments;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -9,13 +9,17 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatButton;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.clothesshoppingapp.models.Category;
+import com.example.clothesshoppingapp.adapters.CategoryAdapter;
+import com.example.clothesshoppingapp.models.Product;
+import com.example.clothesshoppingapp.adapters.ProductAdapter;
+import com.example.clothesshoppingapp.R;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;

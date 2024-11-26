@@ -1,4 +1,4 @@
-package com.example.clothesshoppingapp;
+package com.example.clothesshoppingapp.activities;
 
 import android.graphics.Paint;
 import android.os.Bundle;
@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.clothesshoppingapp.R;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
     private ImageView productImage;
     private TextView productName, productDescription, productPrice, productOriginalPrice, productDiscount, productRating, productReviews, deliveryTime;
-    private LinearLayout sizeContainer;
+    private LinearLayout sizeContainer, buyNowButton, goToCartButton;
     private TextView selectedSize;
     private LinearLayout sizeLayout;
 
@@ -42,8 +43,19 @@ public class ProductDetailActivity extends AppCompatActivity {
         selectedSize = findViewById(R.id.selectedSize);
         sizeLayout = findViewById(R.id.sizeLayout);
 
+        buyNowButton = findViewById(R.id.buyNowButton);
+        goToCartButton = findViewById(R.id.goToCartButton);
+
         ImageView backArrow = findViewById(R.id.backButton);
         backArrow.setOnClickListener(v -> onBackPressed());
+
+        buyNowButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Buy Now Button CLicked", Toast.LENGTH_SHORT).show();
+        });
+
+        goToCartButton.setOnClickListener(v -> {
+            Toast.makeText(this, "Go to Cart Button CLicked", Toast.LENGTH_SHORT).show();
+        });
 
         // Retrieve data from intent
         try {

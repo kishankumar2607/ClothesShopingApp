@@ -1,4 +1,4 @@
-package com.example.clothesshoppingapp;
+package com.example.clothesshoppingapp.fragments;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -11,6 +11,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.example.clothesshoppingapp.R;
+import com.example.clothesshoppingapp.activities.LoginActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 

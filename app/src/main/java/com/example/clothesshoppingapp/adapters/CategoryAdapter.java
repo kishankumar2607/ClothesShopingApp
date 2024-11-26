@@ -1,4 +1,4 @@
-package com.example.clothesshoppingapp;
+package com.example.clothesshoppingapp.adapters;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.clothesshoppingapp.models.Category;
+import com.example.clothesshoppingapp.R;
 
 import java.util.List;
 

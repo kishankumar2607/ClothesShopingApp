@@ -8,6 +8,9 @@ import android.widget.LinearLayout;
 import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.clothesshoppingapp.adapters.ProductAdapter;
+import com.example.clothesshoppingapp.models.Product;
+
 import java.util.List;
 
 public class ProductListComponent extends LinearLayout {

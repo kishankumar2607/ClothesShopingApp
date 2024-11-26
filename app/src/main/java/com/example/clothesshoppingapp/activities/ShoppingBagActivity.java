@@ -1,4 +1,4 @@
-package com.example.clothesshoppingapp;
+package com.example.clothesshoppingapp.activities;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,6 +13,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
+import com.example.clothesshoppingapp.R;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
