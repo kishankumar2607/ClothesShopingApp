@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ClothesShoppingApp</string>
+    <string name="app_name">Stylish</string>
     <string name="screen1">Choose Products</string>
     <string name="screen2">Make Payment</string>
     <string name="screen3">Get Your Order</string>
@@ -23,11 +23,36 @@
     <string name="confirm_password">Confirm Password</string>
     <string name="create_account">Create Account</string>
     <string name="i_already_have_an_account">I Already Have an Account</string>
-    <string name="button_you_are_agree_to_terms">button, you are agree to terms.</string>
+    <string name="button_you_are_agree_to_terms">button, you are agree to our terms and condition.</string>
     <string name="register">Register</string>
     <string name="by_clicking_the">By clicking the</string>
     <string name="submit">Submit</string>
     <string name="send_message_to_reset">* We will send you a message to set or reset your new password</string>
     <string name="enter_your_email_address">Enter your email address</string>
     <string name="client_id">996925543440-l5p9u0bpunn9rug3pt8mgop1mtvg0hsn.apps.googleusercontent.com</string>
+    <string name="home">Home</string>
+    <string name="wishlist">Wishlist</string>
+    <string name="search">Search</string>
+    <string name="setting">Setting</string>
+    <string name="cart">Cart</string>
+    <string name="all_featured">All Featured</string>
+    <string name="search_any_product">Search any Product...</string>
+    <string name="shop_now">Shop Now</string>
+    <string name="deal_of_the_day">Deal of the Day</string>
+    <string name="view_all">View All</string>
+    <string name="_50_40_off">50-40% OFF</string>
+    <string name="now_in_product">Now in (product)</string>
+    <string name="all_colours">All colours</string>
+    <string name="loading">Loading...</string>
+    <string name="trending_products">Trending Products</string>
+    <string name="special_offers">Special Offers</string>
+    <string name="special_offer_description">We make sure you get the offer you need at best prices</string>
+    <string name="stand_a_chance_to_get_rewarded">Stand a chance to get rewarded</string>
+    <string name="visit_now">Visit now</string>
+    <string name="flat_and_heels">Flat and Heels</string>
+    <string name="product_details">Product Details:</string>
+    <string name="buy_now">Buy Now</string>
+    <string name="delivery_in">Delivery in</string>
+    <string name="go_to_cart">Go to cart</string>
+    <string name="welcome_to_stylish">Welcome to Stylish</string>
 </resources>

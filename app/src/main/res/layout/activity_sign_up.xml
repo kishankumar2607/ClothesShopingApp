@@ -56,34 +56,24 @@
         android:layout_marginTop="25dp" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        android:layout_marginTop="24dp">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/by_clicking_the"
-            android:textColor="@color/black" />
+        android:layout_marginTop="24dp"
+        android:paddingHorizontal="16dp">
 
         <TextView
             android:id="@+id/registerTerms"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/register"
-            android:paddingStart="0dp"
-            android:paddingEnd="4dp"
-            android:textColor="@color/radical_red"
-            android:layout_marginStart="4dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/button_you_are_agree_to_terms"
-            android:textColor="@color/black"/>
+            android:textColor="@color/black"
+            android:textSize="14sp"
+            android:lineSpacingExtra="8dp"
+            android:gravity="center" />
     </LinearLayout>
+
+
 
     <Button
         android:id="@+id/createAccountButton"

@@ -8,8 +8,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.firebase.auth.FirebaseAuth;
 
 public class ForgotPasswordActivity extends AppCompatActivity {
+    private FirebaseAuth auth;
     private EditText emailInput;
     private Button submitButton;
 
@@ -18,18 +20,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_forgot_password);
 
-        // Initialize views
+        auth = FirebaseAuth.getInstance();
         emailInput = findViewById(R.id.emailInput);
         submitButton = findViewById(R.id.submitButton);
 
-        // Set listener
         submitButton.setOnClickListener(v -> handleForgotPassword());
     }
 
     private void handleForgotPassword() {
         String email = emailInput.getText().toString().trim();
 
-        // Simple validation
         if (email.isEmpty()) {
             emailInput.setError("Email is required");
             emailInput.requestFocus();
@@ -48,8 +48,14 @@ public class ForgotPasswordActivity extends AppCompatActivity {
             return;
         }
 
-        // Simulate password reset request
-        Toast.makeText(this, "Password reset instructions sent to " + email, Toast.LENGTH_SHORT).show();
-        finish(); // Finish the forgot password activity and go back to login
+
+        auth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                Toast.makeText(this, "Password reset instructions sent to " + email, Toast.LENGTH_SHORT).show();
+                finish();
+            } else {
+                Toast.makeText(this, "Error: " + (task.getException() != null ? task.getException().getMessage() : "Unknown error"), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 }

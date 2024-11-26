@@ -1,0 +1,544 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".HomeFragment"
+    android:background="#f9f9f9">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        android:layout_marginBottom="40dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/search_box_background"
+                android:elevation="4dp"
+                android:layout_marginHorizontal="16dp"
+                android:paddingHorizontal="10dp"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_search"
+                    app:tint="@color/grey"
+                    android:layout_gravity="center"/>
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:hint="@string/search_any_product"
+                    android:textColorHint="@color/grey"
+                    android:background="@null"
+                    android:paddingStart="8dp"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/all_featured"
+                android:layout_marginHorizontal="16dp"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="16dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/categoriesRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal" />
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginHorizontal="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <!-- Background Image -->
+                    <ImageView
+                        android:id="@+id/cardBackground"
+                        android:layout_width="match_parent"
+                        android:layout_height="210dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/discount_banner" />
+
+                    <!-- Text and Button Overlay -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:gravity="center_vertical|start">
+
+                        <!-- Title -->
+                        <TextView
+                            android:id="@+id/promoTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/_50_40_off"
+                            android:textSize="24sp"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold" />
+
+                        <!-- Subtitle -->
+                        <TextView
+                            android:id="@+id/promoSubtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/now_in_product"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/white" />
+
+                        <!-- Additional Text -->
+                        <TextView
+                            android:id="@+id/promoDetails"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/all_colours"
+                            android:textSize="16sp"
+                            android:textColor="@android:color/white" />
+
+                        <!-- Button -->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/shopNowButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:backgroundTint="@null"
+                            android:layout_marginTop="16dp"
+                            android:text="@string/shop_now"
+                            android:textSize="14sp"
+                            android:textStyle="bold"
+                            android:background="@drawable/transparent_button"
+                            android:textColor="@android:color/white"
+                            android:drawableEnd="@drawable/ic_arrow_right"
+                            android:drawablePadding="8dp"
+                            android:paddingHorizontal="12dp" />
+                    </LinearLayout>
+                </FrameLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:elevation="4dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/dodger_blue">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="20dp"
+                    android:paddingHorizontal="16dp">
+
+                    <!-- Left Section: Texts -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!-- Deal Title -->
+                        <TextView
+                            android:id="@+id/dealTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/deal_of_the_day"
+                            android:textColor="@android:color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <!-- Deal Timer -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_timer"
+                                android:layout_marginEnd="5dp" />
+
+                            <TextView
+                                android:id="@+id/dealTimer"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/loading"
+                                android:textColor="@android:color/white"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Right Section: Button -->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/viewAllButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/transparent_button"
+                        android:backgroundTint="@null"
+                        android:drawableEnd="@drawable/ic_arrow_right"
+                        android:drawablePadding="5dp"
+                        android:layout_gravity="center"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/view_all"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="16dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/horizontalRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="1dp"
+                android:background="@android:color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="16dp"
+                    android:paddingHorizontal="0dp"
+                    android:gravity="center_vertical">
+
+                    <!-- Image Section -->
+                    <ImageView
+                        android:id="@+id/offerImage"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:src="@drawable/special_offer_image"
+                        android:scaleType="fitCenter"
+                        android:layout_marginEnd="16dp" />
+
+                    <!-- Text Section -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_weight="1">
+
+                        <!-- Title -->
+                        <TextView
+                            android:id="@+id/offerTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/special_offers"
+                            android:textColor="@color/black"
+                            android:textSize="20sp"
+                            android:textStyle="bold"
+                            android:drawableEnd="@drawable/ic_emoji"
+                            android:drawablePadding="4dp" />
+
+                        <!-- Subtitle -->
+                        <TextView
+                            android:id="@+id/offerSubtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/special_offer_description"
+                            android:textColor="@color/darker_grey"
+                            android:textSize="16sp"
+                            android:layout_marginTop="4dp"
+                            android:lineSpacingExtra="6dp"/>
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="1dp"
+                android:background="@android:color/white">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="16dp"
+                    android:paddingEnd="16dp">
+
+                    <!-- Image Section -->
+                    <ImageView
+                        android:id="@+id/productImage"
+                        android:layout_width="130dp"
+                        android:layout_height="115dp"
+                        android:layout_gravity="center"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/shoes_image" />
+
+                    <!-- Text Section -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        android:layout_marginStart="10dp"
+                        android:gravity="center"
+                        android:layout_gravity="center">
+
+                        <!-- Title -->
+                        <TextView
+                            android:id="@+id/productTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/flat_and_heels"
+                            android:textSize="20sp"
+                            android:textColor="@color/black"
+                            android:textStyle="bold" />
+
+                        <!-- Subtitle -->
+                        <TextView
+                            android:id="@+id/productSubtitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="4dp"
+                            android:text="@string/stand_a_chance_to_get_rewarded"
+                            android:textSize="14sp"
+                            android:textColor="@color/darker_grey"
+                            android:gravity="center"/>
+
+                    <!-- Button Section -->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/visitButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="42dp"
+                            android:backgroundTint="@color/radical_red"
+                            android:text="@string/visit_now"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/white"
+                            android:drawableEnd="@drawable/ic_arrow_right"
+                            android:drawablePadding="8dp"
+                            android:paddingStart="16dp"
+                            android:layout_marginTop="8dp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp"
+                android:elevation="4dp"
+                app:cardCornerRadius="12dp"
+                app:cardBackgroundColor="@color/brink_pink">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:paddingVertical="20dp"
+                    android:paddingHorizontal="16dp">
+
+                    <!-- Left Section: Texts -->
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <!-- Deal Title -->
+                        <TextView
+                            android:id="@+id/trendingProductsTitle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/trending_products"
+                            android:textColor="@android:color/white"
+                            android:textSize="18sp"
+                            android:textStyle="bold" />
+
+                        <!-- Deal Timer -->
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:layout_marginTop="8dp"
+                            android:gravity="center_vertical">
+
+                            <ImageView
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:src="@drawable/ic_calendar"
+                                android:layout_marginEnd="5dp" />
+
+                            <TextView
+                                android:id="@+id/dealDate"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/loading"
+                                android:textColor="@android:color/white"
+                                android:textSize="14sp" />
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <!-- Right Section: Button -->
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/viewAllTrendingButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/transparent_button"
+                        android:backgroundTint="@null"
+                        android:drawableEnd="@drawable/ic_arrow_right"
+                        android:drawablePadding="5dp"
+                        android:layout_gravity="center"
+                        android:paddingHorizontal="10dp"
+                        android:text="@string/view_all"
+                        android:textColor="@android:color/white"
+                        android:textSize="14sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="16dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/gridRecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
+            </LinearLayout>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!-- Image Section -->
+                    <ImageView
+                        android:id="@+id/newArrivalsImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/hot_summer_sale" />
+
+                    <!-- Text and Button Section -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingVertical="12dp"
+                        android:paddingHorizontal="8dp">
+
+                        <!-- Text Section -->
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <!-- Title -->
+                            <TextView
+                                android:id="@+id/newArrivalsTitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="New Arrivals"
+                                android:textSize="22sp"
+                                android:textColor="@color/black"
+                                android:textStyle="bold" />
+
+                            <!-- Subtitle -->
+                            <TextView
+                                android:id="@+id/newArrivalsSubtitle"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Summer’ 25 Collections"
+                                android:textSize="16sp"
+                                android:textColor="@color/darker_grey"
+                                android:layout_marginTop="4dp" />
+                        </LinearLayout>
+
+                        <!-- Button Section -->
+                        <androidx.appcompat.widget.AppCompatButton
+                            android:id="@+id/viewAllNewArrivalsButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="40dp"
+                            android:backgroundTint="@color/radical_red"
+                            android:text="View all"
+                            android:textSize="14sp"
+                            android:textColor="@android:color/white"
+                            android:textStyle="bold"
+                            android:drawableEnd="@drawable/ic_arrow_right"
+                            android:drawablePadding="8dp"
+                            android:paddingStart="16dp"
+                            android:elevation="4dp"
+                            android:gravity="center"
+                            android:layout_gravity="bottom"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingVertical="20dp"/>
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

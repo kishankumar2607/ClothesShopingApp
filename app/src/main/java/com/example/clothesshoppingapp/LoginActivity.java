@@ -32,6 +32,18 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
+        // Check if the user is already logged in
+        boolean isLoggedIn = getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                .getBoolean("isLoggedIn", false);
+
+        if (isLoggedIn) {
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+            return;
+        }
+
+        setContentView(R.layout.activity_login);
+
         auth = FirebaseAuth.getInstance();
         usernameInput = findViewById(R.id.usernameInput);
         passwordInput = findViewById(R.id.passwordInput);
@@ -94,8 +106,22 @@ public class LoginActivity extends AppCompatActivity {
             return;
         }
 
+//        auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(this, task -> {
+//            if (task.isSuccessful()) {
+//                startActivity(new Intent(this, MainActivity.class));
+//                finish();
+//            } else {
+//                handleFirebaseAuthException(task.getException());
+//            }
+//        });
         auth.signInWithEmailAndPassword(username, password).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
+                // Save login session in SharedPreferences
+                getSharedPreferences("UserPrefs", MODE_PRIVATE)
+                        .edit()
+                        .putBoolean("isLoggedIn", true)
+                        .apply();
+
                 startActivity(new Intent(this, MainActivity.class));
                 finish();
             } else {

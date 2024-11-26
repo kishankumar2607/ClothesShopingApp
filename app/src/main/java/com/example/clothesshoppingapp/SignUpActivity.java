@@ -4,6 +4,10 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.StyleSpan;
 import android.view.MotionEvent;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,12 +35,17 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
+        TextView registerTerms = findViewById(R.id.registerTerms);
+
         auth = FirebaseAuth.getInstance();
         usernameInput = findViewById(R.id.usernameInput);
         passwordInput = findViewById(R.id.passwordInput);
         confirmPasswordInput = findViewById(R.id.confirmPasswordInput);
         createAccountButton = findViewById(R.id.createAccountButton);
         loginLink = findViewById(R.id.loginLink);
+
+        String fullText = "By clicking the Register button, you are agreeing to our terms and conditions.";
+        SpannableString spannableString = new SpannableString(fullText);
 
         createAccountButton.setOnClickListener(v -> handleSignUp());
         loginLink.setOnClickListener(v -> startActivity(new Intent(SignUpActivity.this, LoginActivity.class)));
@@ -60,6 +69,13 @@ public class SignUpActivity extends AppCompatActivity {
             }
             return false;
         });
+
+        int start = fullText.indexOf("Register");
+        int end = start + "Register".length();
+        spannableString.setSpan(new ForegroundColorSpan(getResources().getColor(R.color.radical_red)), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        spannableString.setSpan(new StyleSpan(android.graphics.Typeface.BOLD), start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+
+        registerTerms.setText(spannableString);
     }
 
     private void togglePasswordVisibility(EditText passwordInput) {

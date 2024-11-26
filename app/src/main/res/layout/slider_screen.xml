@@ -35,7 +35,7 @@
         android:layout_marginTop="20dp"
         android:text="@string/screen1desc"
         android:textAlignment="center"
-        android:textColor="@color/grey"
+        android:textColor="@color/darker_grey"
         android:textSize="20sp"
         android:typeface="sans"
         android:lineSpacingExtra="8dp"/>
