@@ -41,7 +41,6 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.Catego
                 .into(holder.categoryImage);
         holder.categoryName.setText(category.getName());
 
-        // Handle click events
         holder.itemView.setOnClickListener(v -> {
             Toast.makeText(
                     holder.itemView.getContext(),

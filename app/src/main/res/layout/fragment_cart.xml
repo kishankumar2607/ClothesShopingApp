@@ -1,17 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CartFragment">
+    android:orientation="vertical">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/cartRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="16dp" />
 
     <TextView
+        android:id="@+id/emptyCartMessage"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Cart Page"
+        android:layout_gravity="center"
+        android:text="@string/no_items_in_the_cart"
+        android:textSize="24sp"
+        android:textStyle="bold"
         android:gravity="center"
-        android:textColor="@color/black"
-        android:textSize="50dp"
-        android:textStyle="bold"/>
+        android:visibility="gone"
+        android:textColor="@android:color/darker_gray" />
 
-</FrameLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Total Items -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/totalItemsAmount"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total Items:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/totalItemsTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <!-- Subtotal -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/subtotalTextLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Subtotal:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/subtotalTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <!-- Tax -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/taxTextLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Tax (13%):"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/taxTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <!-- Delivery Fee -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/deliveryFeeTextLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Delivery Fee:"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+
+            <TextView
+                android:id="@+id/deliveryFeeTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/freeDeliveryMessage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:text="@string/get_free_delivery"
+            android:textColor="@color/radical_red"
+            android:textSize="14sp"
+            android:textStyle="italic" />
+
+        <!-- Total -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/totalTextLabel"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Total:"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/radical_red"/>
+
+            <TextView
+                android:id="@+id/totalTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$0.00"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/radical_red"/>
+        </LinearLayout>
+
+        <!-- Checkout Button -->
+        <Button
+            android:id="@+id/checkoutButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Checkout"
+            android:textSize="16sp"
+            android:background="@color/radical_red"
+            android:textColor="@android:color/white"
+            android:padding="12dp"
+            android:layout_marginBottom="70dp"/>
+    </LinearLayout>
+
+</LinearLayout>

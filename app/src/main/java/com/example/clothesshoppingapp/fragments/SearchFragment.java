@@ -1,20 +1,22 @@
 package com.example.clothesshoppingapp.fragments;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.clothesshoppingapp.models.Product;
-import com.example.clothesshoppingapp.adapters.ProductAdapter;
 import com.example.clothesshoppingapp.R;
+import com.example.clothesshoppingapp.adapters.ProductAdapter;
+import com.example.clothesshoppingapp.models.Product;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -25,9 +27,11 @@ import java.util.List;
 public class SearchFragment extends Fragment {
 
     private RecyclerView wishListRecyclerView;
-    private TextView productCountText;
+    private TextView productCountText, noProductsFoundText;
+    private EditText searchView;
     private ProductAdapter adapter;
     private List<Product> productList = new ArrayList<>();
+    private List<Product> filteredList = new ArrayList<>();
     private FirebaseFirestore db;
 
     @Override
@@ -36,11 +40,26 @@ public class SearchFragment extends Fragment {
 
         wishListRecyclerView = view.findViewById(R.id.wishListRecyclerView);
         productCountText = view.findViewById(R.id.productCountText);
+        noProductsFoundText = view.findViewById(R.id.noProductsFoundText);
+        searchView = view.findViewById(R.id.searchView);
 
         wishListRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         db = FirebaseFirestore.getInstance();
         fetchProductsFromFirestore();
+
+        searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                filterProducts(s.toString().trim());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {}
+        });
 
         return view;
     }
@@ -54,13 +73,12 @@ public class SearchFragment extends Fragment {
                     productList.clear();
                     productList.addAll(snapshot.toObjects(Product.class));
 
-                    // Update product count
-                    int productCount = productList.size();
-                    productCountText.setText(productCount + "+ Products");
+                    filteredList.clear();
+                    filteredList.addAll(productList);
 
-                    // Set adapter
-                    adapter = new ProductAdapter(getContext(), productList, product -> {
-                        // Handle product click
+                    updateProductCount();
+
+                    adapter = new ProductAdapter(getContext(), filteredList, product -> {
                         Toast.makeText(getContext(), "Clicked: " + product.getName(), Toast.LENGTH_SHORT).show();
                     });
                     wishListRecyclerView.setAdapter(adapter);
@@ -69,5 +87,34 @@ public class SearchFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed to load products: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void filterProducts(String query) {
+        filteredList.clear();
+
+        if (query.isEmpty()) {
+            filteredList.addAll(productList);
+        } else {
+            for (Product product : productList) {
+                if (product.getName().toLowerCase().contains(query.toLowerCase())) {
+                    filteredList.add(product);
+                }
+            }
+        }
+
+        if (filteredList.isEmpty()) {
+            noProductsFoundText.setVisibility(View.VISIBLE);
+            wishListRecyclerView.setVisibility(View.GONE);
+        } else {
+            noProductsFoundText.setVisibility(View.GONE);
+            wishListRecyclerView.setVisibility(View.VISIBLE);
+        }
+
+        adapter.notifyDataSetChanged();
+        updateProductCount();
+    }
+
+    private void updateProductCount() {
+        productCountText.setText(filteredList.size() + " Products");
     }
 }

@@ -21,6 +21,7 @@ import com.example.clothesshoppingapp.fragments.SearchFragment;
 import com.example.clothesshoppingapp.fragments.SettingFragment;
 import com.example.clothesshoppingapp.fragments.WishListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.google.firebase.FirebaseApp;
 
 import java.util.Calendar;
 
@@ -33,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        FirebaseApp.initializeApp(this);
 
         bottomNavigationView = findViewById(R.id.bottomNavView);
         frameLayout = findViewById(R.id.frameLayout);

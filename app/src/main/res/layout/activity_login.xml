@@ -67,51 +67,6 @@
         android:typeface="sans"
         app:cornerRadius="10dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:text="@string/or_continue_with"
-        android:textColor="@color/black" />
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/googleSignInButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_google"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="onGoogleSignInClick"/>
-
-        <ImageView
-            android:id="@+id/appleSignInButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
-            android:src="@drawable/ic_apple"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="onAppleSignInClick" />
-
-        <ImageView
-            android:id="@+id/facebookSignInButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/ic_facebook"
-            android:clickable="true"
-            android:focusable="true"
-            android:onClick="onFacebookSignInClick" />
-    </LinearLayout>
-
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,8 +1,10 @@
 package com.example.clothesshoppingapp.activities;
 
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -12,7 +14,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.clothesshoppingapp.R;
+import com.example.clothesshoppingapp.fragments.CartFragment;
+import com.example.clothesshoppingapp.models.CartItem;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProductDetailActivity extends AppCompatActivity {
@@ -50,12 +55,38 @@ public class ProductDetailActivity extends AppCompatActivity {
         backArrow.setOnClickListener(v -> onBackPressed());
 
         buyNowButton.setOnClickListener(v -> {
-            Toast.makeText(this, "Buy Now Button CLicked", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(ProductDetailActivity.this, ShoppingBagActivity.class);
+
+            // Pass all product details to ShoppingBagActivity
+            intent.putExtra("imageUrl", getIntent().getStringExtra("imageUrl"));
+            intent.putExtra("name", getIntent().getStringExtra("name"));
+            intent.putExtra("description", getIntent().getStringExtra("description"));
+            intent.putExtra("price", getIntent().getIntExtra("price", 0));
+            intent.putExtra("originalPrice", getIntent().getIntExtra("originalPrice", 0));
+            intent.putExtra("discount", getIntent().getStringExtra("discount"));
+            intent.putExtra("rating", getIntent().getFloatExtra("rating", 0f));
+            intent.putExtra("reviews", getIntent().getIntExtra("reviews", 0));
+            intent.putStringArrayListExtra("sizes", (ArrayList<String>) getIntent().getStringArrayListExtra("sizes"));
+
+            // Start ShoppingBagActivity
+            startActivity(intent);
         });
 
         goToCartButton.setOnClickListener(v -> {
-            Toast.makeText(this, "Go to Cart Button CLicked", Toast.LENGTH_SHORT).show();
+            CartFragment.addToCart(new CartItem(
+                    getIntent().getStringExtra("imageUrl"),
+                    getIntent().getStringExtra("name"),
+                    getIntent().getIntExtra("price", 0),
+                    1
+            ));
+            Toast.makeText(this, "Item added to cart", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(ProductDetailActivity.this, MainActivity.class);
+            intent.putExtra("openFragment", "CartFragment");
+            startActivity(intent);
         });
+
+        displayProductDetails();
 
         // Retrieve data from intent
         try {
@@ -80,7 +111,7 @@ public class ProductDetailActivity extends AppCompatActivity {
             // Strike through original price
             productOriginalPrice.setPaintFlags(productOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 
-            deliveryTime.setText("Within 1 Hour");
+            deliveryTime.setText("Within 1 - 2 days");
 
         } catch (Exception e) {
             Toast.makeText(this, "Failed to load product details", Toast.LENGTH_SHORT).show();
@@ -95,7 +126,6 @@ public class ProductDetailActivity extends AppCompatActivity {
     private void populateSizes(List<String> sizes) {
         // Filter out empty or null sizes
         if (sizes == null || sizes.isEmpty() || sizes.stream().allMatch(String::isEmpty)) {
-            // Hide size layout and size text if no valid sizes are available
             sizeLayout.setVisibility(View.GONE);
             selectedSize.setVisibility(View.GONE);
             return;
@@ -150,6 +180,36 @@ public class ProductDetailActivity extends AppCompatActivity {
         }
     }
 
+    private void displayProductDetails() {
+        String imageUrl = getIntent().getStringExtra("imageUrl");
+        String name = getIntent().getStringExtra("name");
+        String description = getIntent().getStringExtra("description");
+        int price = getIntent().getIntExtra("price", 0);
+        int originalPrice = getIntent().getIntExtra("originalPrice", 0);
 
+        Glide.with(this).load(imageUrl).into(productImage);
+        productName.setText(name);
+        productDescription.setText(description);
+        productPrice.setText("$" + price);
+        productOriginalPrice.setText("$" + originalPrice);
+        productOriginalPrice.setPaintFlags(productOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+    }
 
+    public static class GetStartedActivity extends AppCompatActivity {
+        Button startButton;
+        @Override
+        protected void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_get_started);
+            startButton = findViewById(R.id.startButton);
+            startButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent i = new Intent(GetStartedActivity.this, LoginActivity.class);
+                    startActivity(i);
+                    finish();
+                }
+            });
+        }
+    }
 }

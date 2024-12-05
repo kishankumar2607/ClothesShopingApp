@@ -81,11 +81,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void togglePasswordVisibility(EditText passwordInput) {
         if (isPasswordVisible) {
-            // Hide the password
             passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             passwordInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock, 0, R.drawable.password_hide, 0); // Set closed eye icon
         } else {
-            // Show the password
             passwordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             passwordInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock, 0, R.drawable.password_show, 0); // Set open eye icon
         }
@@ -95,11 +93,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     private void toggleConfirmPasswordVisibility(EditText confirmPasswordInput) {
         if (isConfirmPasswordVisible) {
-            // Hide the confirm password
             confirmPasswordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             confirmPasswordInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock, 0, R.drawable.password_hide, 0); // Set closed eye icon
         } else {
-            // Show the confirm password
             confirmPasswordInput.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD);
             confirmPasswordInput.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_lock, 0, R.drawable.password_show, 0); // Set open eye icon
         }

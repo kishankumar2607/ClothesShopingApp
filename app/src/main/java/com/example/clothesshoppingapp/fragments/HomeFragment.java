@@ -52,14 +52,12 @@ public class HomeFragment extends Fragment {
         AppCompatButton visitButton = view.findViewById(R.id.visitButton);
         AppCompatButton viewAllNewArrivalsButton = view.findViewById(R.id.viewAllNewArrivalsButton);
 
-        // Initialize RecyclerViews
         horizontalRecyclerView = view.findViewById(R.id.horizontalRecyclerView);
         gridRecyclerView = view.findViewById(R.id.gridRecyclerView);
 
         firestore = FirebaseFirestore.getInstance();
         productsRef = firestore.collection("products");
 
-        // Setup Horizontal RecyclerView
         horizontalRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         horizontalAdapter = new ProductAdapter(getContext(), horizontalProductList, product -> {
             Toast.makeText(getContext(), "Clicked: " + product.getName(), Toast.LENGTH_SHORT).show();
@@ -72,7 +70,6 @@ public class HomeFragment extends Fragment {
         });
         gridRecyclerView.setAdapter(gridAdapter);
 
-        // Load products from Firebase
         fetchProductsFromFirestore();
 
 

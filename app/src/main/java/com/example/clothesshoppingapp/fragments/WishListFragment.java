@@ -53,13 +53,10 @@ public class WishListFragment extends Fragment {
                     productList.clear();
                     productList.addAll(snapshot.toObjects(Product.class));
 
-                    // Update product count
                     int productCount = productList.size();
                     productCountText.setText(productCount + "+ Products");
 
-                    // Set adapter
                     adapter = new ProductAdapter(getContext(), productList, product -> {
-                        // Handle product click
                         Toast.makeText(getContext(), "Clicked: " + product.getName(), Toast.LENGTH_SHORT).show();
                     });
                     wishListRecyclerView.setAdapter(adapter);

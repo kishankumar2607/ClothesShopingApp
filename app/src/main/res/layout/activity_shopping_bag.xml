@@ -15,7 +15,7 @@
             android:layout_height="32dp"
             android:src="@drawable/ic_back_arrow"
             android:layout_gravity="start"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="30dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -44,12 +44,21 @@
                     android:textColor="@color/black" />
 
                 <TextView
+                    android:id="@+id/productDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:lineSpacingExtra="5dp"
+                    android:textColor="@color/black" />
+
+                <TextView
                     android:id="@+id/productPrice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="16sp"
+                    android:textStyle="bold"
                     android:textColor="@color/radical_red"
-                    android:layout_marginTop="4dp" />
+                    android:layout_marginTop="6dp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -57,22 +66,24 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="16dp">
+            android:layout_marginTop="30dp">
 
-            <Spinner
-                android:id="@+id/sizeSpinner"
-                android:layout_width="0dp"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:padding="8dp" />
+                android:text="@string/select_total_quantity"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"/>
 
             <Spinner
                 android:id="@+id/quantitySpinner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:padding="8dp"
-                android:layout_marginStart="16dp" />
+                android:gravity="end"
+                android:layout_marginStart="100dp"
+                android:padding="8dp" />
         </LinearLayout>
 
         <TextView
@@ -81,50 +92,153 @@
             android:layout_height="wrap_content"
             android:text="Delivery by: 10 May 20XX"
             android:textSize="16sp"
-            android:layout_marginTop="16dp" />
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/grey" />
 
         <TextView
             android:id="@+id/orderPaymentDetails"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Order Payment Details"
+            android:text="@string/order_payment_details"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginTop="24dp" />
+            android:textColor="@color/black"
+            android:layout_marginTop="18dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/order_amount"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/orderAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:text="$7000"
+                android:textColor="@color/radical_red"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Delivery Fee:"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/deliveryAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:text="$30"
+                android:textColor="@color/radical_red"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
 
         <TextView
-            android:id="@+id/orderAmount"
+            android:id="@+id/freeDeliveryMessage"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Order Amount: ₹7000"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp" />
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:text="@string/get_free_delivery"
+            android:textColor="@color/radical_red"
+            android:textSize="14sp"
+            android:textStyle="italic" />
 
-        <TextView
-            android:id="@+id/taxAmount"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tax: ₹140 (5%)"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp" />
+            android:layout_height="30dp"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/totalAmount"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Tax: "
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/taxAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:text="$140 (13%)"
+                android:textColor="@color/radical_red"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/grey" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Total Amount: ₹7140"
-            android:textSize="16sp"
-            android:layout_marginTop="8dp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:layout_marginTop="18dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/total_amount"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/totalAmount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:gravity="right"
+                android:text="$7140"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/radical_red" />
+        </LinearLayout>
 
         <Button
             android:id="@+id/proceedToPayment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="35dp"
             android:background="@color/radical_red"
-            android:text="Proceed to Payment"
+            android:textSize="18sp"
+            android:text="@string/proceed_to_checkout"
             android:textColor="@android:color/white"
-            android:padding="16dp" />
+            android:padding="10dp"
+            android:elevation="4dp"/>
     </LinearLayout>
 </ScrollView>
