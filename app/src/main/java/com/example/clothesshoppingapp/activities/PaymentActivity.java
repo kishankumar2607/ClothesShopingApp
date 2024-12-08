@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.example.clothesshoppingapp.R;
 
@@ -24,25 +25,28 @@ public class PaymentActivity extends AppCompatActivity {
     private EditText cardHolderName, cardNumber, expiryDate, cvv;
     private TextView errorCheckBoxMsg;
     private CheckBox termsCheckbox;
-    private Button proceedToPaymentButton;
+    private Button proceedToOrderButton;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
+        db = FirebaseFirestore.getInstance();
+
         cardHolderName = findViewById(R.id.cardHolderName);
         cardNumber = findViewById(R.id.cardNumber);
         expiryDate = findViewById(R.id.expiryDate);
         cvv = findViewById(R.id.cvv);
         termsCheckbox = findViewById(R.id.termsCheckbox); // Now initialized correctly
-        proceedToPaymentButton = findViewById(R.id.continueButton);
+        proceedToOrderButton = findViewById(R.id.placeOrderButton);
         errorCheckBoxMsg = findViewById(R.id.checkBoxError);
         ImageView backButton = findViewById(R.id.backButton);
 
         backButton.setOnClickListener(v -> onBackPressed());
 
-        proceedToPaymentButton.setOnClickListener(v -> {
+        proceedToOrderButton.setOnClickListener(v -> {
 
             if (validateInputs()) {
                 if (!termsCheckbox.isChecked()) {
@@ -129,10 +133,35 @@ public class PaymentActivity extends AppCompatActivity {
 
         new Handler().postDelayed(() -> {
             dialog.dismiss();
+            deleteCartData();
             Intent intent = new Intent(PaymentActivity.this, MainActivity.class);
             intent.putExtra("redirectTo", "HomeFragment");
             startActivity(intent);
             finish();
         }, 3000);
     }
+
+    private void deleteCartData() {
+        db.collection("users")
+                .document("userId") // Replace with the logged-in user's unique ID
+                .collection("cart")
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    for (com.google.firebase.firestore.DocumentSnapshot document : querySnapshot.getDocuments()) {
+                        document.getReference().delete()
+                                .addOnSuccessListener(aVoid -> {
+                                    // Successfully deleted a document
+                                })
+                                .addOnFailureListener(e -> {
+                                    // Handle failure for deleting a single document
+                                    e.printStackTrace();
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    // Handle failure for retrieving cart data
+                    e.printStackTrace();
+                });
+    }
+
 }

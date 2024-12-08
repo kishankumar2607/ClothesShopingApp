@@ -40,10 +40,10 @@ public class CheckoutActivity extends AppCompatActivity {
         backArrow.setOnClickListener(v -> onBackPressed());
 
         saveButton.setOnClickListener(v -> {
-            if (validateInputs()) {
+//            if (validateInputs()) {
                 Intent intent = new Intent(CheckoutActivity.this, PaymentActivity.class);
                 startActivity(intent);
-            }
+//            }
         });
     }
 

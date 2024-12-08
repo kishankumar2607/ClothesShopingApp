@@ -83,4 +83,16 @@
     <string name="canada">Canada</string>
     <string name="proceed_to_payment">Proceed to payment</string>
     <string name="no_items_in_the_cart">No items in the cart</string>
+    <string name="place_an_order">Place an order</string>
+    <string name="please_agree_to_the_terms_and_conditions_to_proceed">Please agree to the Terms and Conditions to proceed.</string>
+    <string name="i_agree_to_the_terms_and_conditions">I agree to the terms and conditions</string>
+    <string name="enter_cvv">Enter CVV</string>
+    <string name="cvv">CVV</string>
+    <string name="mm_yy">MM/YY</string>
+    <string name="expiry_date">Expiry Date</string>
+    <string name="enter_card_number">Enter card number</string>
+    <string name="card_number">Card Number</string>
+    <string name="enter_cardholder_name">Enter cardholder name</string>
+    <string name="cardholder_name">Cardholder Name</string>
+    <string name="payment">Payment</string>
 </resources>

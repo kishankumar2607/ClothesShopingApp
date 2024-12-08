@@ -16,9 +16,12 @@ import com.bumptech.glide.Glide;
 import com.example.clothesshoppingapp.R;
 import com.example.clothesshoppingapp.fragments.CartFragment;
 import com.example.clothesshoppingapp.models.CartItem;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ProductDetailActivity extends AppCompatActivity {
 
@@ -28,11 +31,14 @@ public class ProductDetailActivity extends AppCompatActivity {
     private TextView selectedSize;
     private LinearLayout sizeLayout;
 
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_product_detail);
+
+        db = FirebaseFirestore.getInstance();
 
         productImage = findViewById(R.id.productImage);
         productName = findViewById(R.id.productName);
@@ -72,18 +78,29 @@ public class ProductDetailActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+//        goToCartButton.setOnClickListener(v -> {
+//            CartFragment.addToCart(new CartItem(
+//                    getIntent().getStringExtra("imageUrl"),
+//                    getIntent().getStringExtra("name"),
+//                    getIntent().getIntExtra("price", 0),
+//                    1
+//            ));
+//            Toast.makeText(this, "Item added to cart", Toast.LENGTH_SHORT).show();
+//
+//            Intent intent = new Intent(ProductDetailActivity.this, MainActivity.class);
+//            intent.putExtra("openFragment", "CartFragment");
+//            startActivity(intent);
+//        });
+
+        // Add the onClickListener for the "Add to Cart" button
         goToCartButton.setOnClickListener(v -> {
-            CartFragment.addToCart(new CartItem(
+            CartItem item = new CartItem(
                     getIntent().getStringExtra("imageUrl"),
                     getIntent().getStringExtra("name"),
                     getIntent().getIntExtra("price", 0),
                     1
-            ));
-            Toast.makeText(this, "Item added to cart", Toast.LENGTH_SHORT).show();
-
-            Intent intent = new Intent(ProductDetailActivity.this, MainActivity.class);
-            intent.putExtra("openFragment", "CartFragment");
-            startActivity(intent);
+            );
+            addToCart(item);
         });
 
         displayProductDetails();
@@ -178,6 +195,53 @@ public class ProductDetailActivity extends AppCompatActivity {
 
             sizeContainer.addView(sizeButton);
         }
+    }
+
+    private void addToCart(CartItem item) {
+        db.collection("users")
+                .document("userId") // Replace with the logged-in user's unique ID
+                .collection("cart")
+                .document(item.getName()) // Use product name or unique ID as the document ID
+                .get()
+                .addOnSuccessListener(documentSnapshot -> {
+                    if (documentSnapshot.exists()) {
+                        // Item already exists, increment quantity
+                        int currentQuantity = documentSnapshot.getLong("quantity").intValue();
+                        db.collection("users")
+                                .document("userId")
+                                .collection("cart")
+                                .document(item.getName())
+                                .update("quantity", currentQuantity + item.getQuantity())
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(this, "Quantity updated in cart!", Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(this, "Failed to update quantity.", Toast.LENGTH_SHORT).show();
+                                });
+                    } else {
+                        // Item does not exist, add it as a new entry
+                        Map<String, Object> cartData = new HashMap<>();
+                        cartData.put("imageUrl", item.getImageUrl());
+                        cartData.put("name", item.getName());
+                        cartData.put("price", item.getPrice());
+                        cartData.put("quantity", item.getQuantity());
+
+                        db.collection("users")
+                                .document("userId")
+                                .collection("cart")
+                                .document(item.getName())
+                                .set(cartData)
+                                .addOnSuccessListener(aVoid -> {
+                                    Toast.makeText(this, "Item added to cart!", Toast.LENGTH_SHORT).show();
+                                })
+                                .addOnFailureListener(e -> {
+                                    Toast.makeText(this, "Failed to add item to cart.", Toast.LENGTH_SHORT).show();
+                                });
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to check existing cart item.", Toast.LENGTH_SHORT).show();
+                });
     }
 
     private void displayProductDetails() {

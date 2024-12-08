@@ -20,6 +20,7 @@ import com.example.clothesshoppingapp.R;
 import com.example.clothesshoppingapp.activities.CheckoutActivity;
 import com.example.clothesshoppingapp.adapters.CartAdapter;
 import com.example.clothesshoppingapp.models.CartItem;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ public class CartFragment extends Fragment {
 
     private static final List<CartItem> cartItems = new ArrayList<>();
     private CartAdapter cartAdapter;
+    private FirebaseFirestore db;
 
     private RecyclerView recyclerView;
     private TextView totalItemsTextView, subTotalTextView, taxTextView, deliveryTextView, totalTextView, emptyCartMessage;
@@ -41,6 +43,8 @@ public class CartFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
+
+        db = FirebaseFirestore.getInstance();
 
         recyclerView = view.findViewById(R.id.cartRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -63,10 +67,10 @@ public class CartFragment extends Fragment {
             }
         });
 
-        cartAdapter = new CartAdapter(getContext(), cartItems, this::updateSummary);
+        cartAdapter = new CartAdapter(getContext(), cartItems, this::fetchCartItems);
         recyclerView.setAdapter(cartAdapter);
 
-        updateSummary();
+        fetchCartItems();
 
         return view;
     }
@@ -80,6 +84,30 @@ public class CartFragment extends Fragment {
         }
         cartItems.add(newItem);
     }
+
+    private void fetchCartItems() {
+        db.collection("users")
+                .document("userId")
+                .collection("cart")
+                .get()
+                .addOnSuccessListener(querySnapshot -> {
+                    cartItems.clear();
+                    for (com.google.firebase.firestore.DocumentSnapshot document : querySnapshot.getDocuments()) {
+                        String imageUrl = document.getString("imageUrl");
+                        String name = document.getString("name");
+                        int price = document.getLong("price").intValue();
+                        int quantity = document.getLong("quantity").intValue();
+
+                        cartItems.add(new CartItem(imageUrl, name, price, quantity));
+                    }
+                    cartAdapter.notifyDataSetChanged();
+                    updateSummary();
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(getContext(), "Failed to fetch cart items.", Toast.LENGTH_SHORT).show();
+                });
+    }
+
 
     private void updateSummary() {
         int totalItems = 0;

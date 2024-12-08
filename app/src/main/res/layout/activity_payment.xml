@@ -20,7 +20,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Payment"
+            android:text="@string/payment"
             android:textSize="20sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -31,7 +31,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cardholder Name"
+            android:text="@string/cardholder_name"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginBottom="8dp" />
@@ -40,7 +40,7 @@
             android:id="@+id/cardHolderName"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Enter cardholder name"
+            android:hint="@string/enter_cardholder_name"
             android:background="@drawable/input_field_background"
             android:padding="12dp"
             android:textColor="@color/black"
@@ -50,7 +50,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Card Number"
+            android:text="@string/card_number"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -60,7 +60,7 @@
             android:id="@+id/cardNumber"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Enter card number"
+            android:hint="@string/enter_card_number"
             android:inputType="number"
             android:maxLength="16"
             android:background="@drawable/input_field_background"
@@ -72,7 +72,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Expiry Date"
+            android:text="@string/expiry_date"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -82,7 +82,7 @@
             android:id="@+id/expiryDate"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="MM/YY"
+            android:hint="@string/mm_yy"
             android:inputType="text"
             android:maxLength="5"
             android:background="@drawable/input_field_background"
@@ -94,7 +94,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="CVV"
+            android:text="@string/cvv"
             android:textSize="16sp"
             android:textStyle="bold"
             android:layout_marginTop="16dp"
@@ -104,7 +104,7 @@
             android:id="@+id/cvv"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:hint="Enter CVV"
+            android:hint="@string/enter_cvv"
             android:inputType="number"
             android:maxLength="3"
             android:background="@drawable/input_field_background"
@@ -116,7 +116,7 @@
             android:id="@+id/termsCheckbox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="I agree to the terms and conditions"
+            android:text="@string/i_agree_to_the_terms_and_conditions"
             android:textSize="14sp"
             android:textColor="@color/black"
             android:layout_marginTop="6dp"/>
@@ -125,7 +125,7 @@
             android:id="@+id/checkBoxError"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Please agree to the Terms and Conditions to proceed."
+            android:text="@string/please_agree_to_the_terms_and_conditions_to_proceed"
             android:textSize="14sp"
             android:visibility="gone"
             android:textColor="@color/radical_red"
@@ -134,10 +134,10 @@
 
         <!-- Continue Button -->
         <Button
-            android:id="@+id/continueButton"
+            android:id="@+id/placeOrderButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Continue"
+            android:text="@string/place_an_order"
             android:background="@color/radical_red"
             android:textColor="@android:color/white"
             android:textSize="16sp"

@@ -14,17 +14,22 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.clothesshoppingapp.R;
 import com.example.clothesshoppingapp.models.CartItem;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
 
     private List<CartItem> cartItems;
-    private Runnable updateFooterCallback;
+    private Context context;
+    private final Runnable updateSummaryCallback;
+    private FirebaseFirestore db;
 
-    public CartAdapter(Context context, List<CartItem> cartItems, Runnable updateFooterCallback) {
+    public CartAdapter(Context context, List<CartItem> cartItems, Runnable updateSummaryCallback) {
+        this.context = context;
         this.cartItems = cartItems;
-        this.updateFooterCallback = updateFooterCallback;
+        this.updateSummaryCallback = updateSummaryCallback;
+        this.db = FirebaseFirestore.getInstance();
     }
 
     @NonNull
@@ -38,40 +43,69 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     public void onBindViewHolder(@NonNull CartViewHolder holder, int position) {
         CartItem item = cartItems.get(position);
 
-        Glide.with(holder.itemView.getContext()).load(item.getImageUrl()).into(holder.productImage);
+        Glide.with(context).load(item.getImageUrl()).into(holder.productImage);
         holder.productName.setText(item.getName());
         holder.productPrice.setText("$" + item.getPrice());
         holder.productQuantity.setText(String.valueOf(item.getQuantity()));
 
+        // Handle increment button click
         holder.incrementButton.setOnClickListener(v -> {
             if (item.getQuantity() < 10) {
                 item.setQuantity(item.getQuantity() + 1);
+                updateItemInFirestore(item);
                 notifyItemChanged(position);
-                updateFooterCallback.run();
+                updateSummaryCallback.run();
             } else {
-                Toast.makeText(holder.itemView.getContext(), "Maximum quantity is 10", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Maximum quantity is 10", Toast.LENGTH_SHORT).show();
             }
         });
 
+        // Handle decrement button click
         holder.decrementButton.setOnClickListener(v -> {
             if (item.getQuantity() > 1) {
                 item.setQuantity(item.getQuantity() - 1);
+                updateItemInFirestore(item);
                 notifyItemChanged(position);
-                updateFooterCallback.run();
+                updateSummaryCallback.run();
+            } else {
+                Toast.makeText(context, "Minimum quantity is 1", Toast.LENGTH_SHORT).show();
             }
         });
 
+        // Handle delete button click
         holder.deleteButton.setOnClickListener(v -> {
+            deleteItemFromFirestore(item);
             cartItems.remove(position);
             notifyItemRemoved(position);
             notifyItemRangeChanged(position, cartItems.size());
-            updateFooterCallback.run();
+            updateSummaryCallback.run();
         });
     }
 
     @Override
     public int getItemCount() {
         return cartItems.size();
+    }
+
+    private void updateItemInFirestore(CartItem item) {
+        db.collection("users")
+                .document("userId") // Replace with the logged-in user's unique ID
+                .collection("cart")
+                .document(item.getName())
+                .update("quantity", item.getQuantity())
+                .addOnSuccessListener(aVoid -> {})
+                .addOnFailureListener(e -> Toast.makeText(context, "Failed to update quantity.", Toast.LENGTH_SHORT).show());
+    }
+
+
+    private void deleteItemFromFirestore(CartItem item) {
+        db.collection("users")
+                .document("userId") // Replace with the logged-in user's unique ID
+                .collection("cart")
+                .document(item.getName())
+                .delete()
+                .addOnSuccessListener(aVoid -> Toast.makeText(context, "Item deleted successfully!", Toast.LENGTH_SHORT).show())
+                .addOnFailureListener(e -> Toast.makeText(context, "Failed to delete item.", Toast.LENGTH_SHORT).show());
     }
 
     public static class CartViewHolder extends RecyclerView.ViewHolder {
