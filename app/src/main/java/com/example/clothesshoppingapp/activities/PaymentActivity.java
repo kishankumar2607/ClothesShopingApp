@@ -14,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import com.example.clothesshoppingapp.R;
@@ -27,6 +29,7 @@ public class PaymentActivity extends AppCompatActivity {
     private CheckBox termsCheckbox;
     private Button proceedToOrderButton;
     private FirebaseFirestore db;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,15 @@ public class PaymentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_payment);
 
         db = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            userId = currentUser.getUid();
+        } else {
+            finish();
+            return;
+        }
 
         cardHolderName = findViewById(R.id.cardHolderName);
         cardNumber = findViewById(R.id.cardNumber);
@@ -47,7 +59,6 @@ public class PaymentActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> onBackPressed());
 
         proceedToOrderButton.setOnClickListener(v -> {
-
             if (validateInputs()) {
                 if (!termsCheckbox.isChecked()) {
                     errorCheckBoxMsg.setVisibility(View.VISIBLE);
@@ -142,24 +153,25 @@ public class PaymentActivity extends AppCompatActivity {
     }
 
     private void deleteCartData() {
+        if (userId == null) {
+            return;
+        }
+
         db.collection("users")
-                .document("userId") // Replace with the logged-in user's unique ID
+                .document(userId)
                 .collection("cart")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     for (com.google.firebase.firestore.DocumentSnapshot document : querySnapshot.getDocuments()) {
                         document.getReference().delete()
                                 .addOnSuccessListener(aVoid -> {
-                                    // Successfully deleted a document
                                 })
                                 .addOnFailureListener(e -> {
-                                    // Handle failure for deleting a single document
                                     e.printStackTrace();
                                 });
                     }
                 })
                 .addOnFailureListener(e -> {
-                    // Handle failure for retrieving cart data
                     e.printStackTrace();
                 });
     }

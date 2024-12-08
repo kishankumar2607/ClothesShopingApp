@@ -14,8 +14,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.clothesshoppingapp.R;
-import com.example.clothesshoppingapp.fragments.CartFragment;
 import com.example.clothesshoppingapp.models.CartItem;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class ProductDetailActivity extends AppCompatActivity {
     private LinearLayout sizeLayout;
 
     private FirebaseFirestore db;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +41,17 @@ public class ProductDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_product_detail);
 
         db = FirebaseFirestore.getInstance();
+
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            userId = currentUser.getUid();
+        } else {
+            Toast.makeText(this, "User not logged in!", Toast.LENGTH_SHORT).show();
+            finish();
+            return;
+        }
 
         productImage = findViewById(R.id.productImage);
         productName = findViewById(R.id.productName);
@@ -78,19 +91,6 @@ public class ProductDetailActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-//        goToCartButton.setOnClickListener(v -> {
-//            CartFragment.addToCart(new CartItem(
-//                    getIntent().getStringExtra("imageUrl"),
-//                    getIntent().getStringExtra("name"),
-//                    getIntent().getIntExtra("price", 0),
-//                    1
-//            ));
-//            Toast.makeText(this, "Item added to cart", Toast.LENGTH_SHORT).show();
-//
-//            Intent intent = new Intent(ProductDetailActivity.this, MainActivity.class);
-//            intent.putExtra("openFragment", "CartFragment");
-//            startActivity(intent);
-//        });
 
         // Add the onClickListener for the "Add to Cart" button
         goToCartButton.setOnClickListener(v -> {
@@ -105,35 +105,7 @@ public class ProductDetailActivity extends AppCompatActivity {
 
         displayProductDetails();
 
-        // Retrieve data from intent
-        try {
-            String imageUrl = getIntent().getStringExtra("imageUrl");
-            String name = getIntent().getStringExtra("name");
-            String description = getIntent().getStringExtra("description");
-            int price = getIntent().getIntExtra("price", 0);
-            int originalPrice = getIntent().getIntExtra("originalPrice", 0);
-            String discount = getIntent().getStringExtra("discount");
-            float rating = getIntent().getFloatExtra("rating", 0f);
-            int reviews = getIntent().getIntExtra("reviews", 0);
-
-            Glide.with(this).load(imageUrl).into(productImage);
-            productName.setText(name != null ? name : "No Name Available");
-            productDescription.setText(description != null ? description : "No Description Available");
-            productPrice.setText("$" + price);
-            productOriginalPrice.setText("$" + originalPrice);
-            productDiscount.setText(discount != null ? discount : "No Discount");
-            productRating.setText(String.valueOf(rating));
-            productReviews.setText("(" + reviews + " reviews)");
-
-            // Strike through original price
-            productOriginalPrice.setPaintFlags(productOriginalPrice.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-
-            deliveryTime.setText("Within 1 - 2 days");
-
-        } catch (Exception e) {
-            Toast.makeText(this, "Failed to load product details", Toast.LENGTH_SHORT).show();
-            e.printStackTrace();
-        }
+        deliveryTime.setText("Within 1 - 2 days");
 
         List<String> sizes = getIntent().getStringArrayListExtra("sizes");
         populateSizes(sizes);
@@ -198,17 +170,28 @@ public class ProductDetailActivity extends AppCompatActivity {
     }
 
     private void addToCart(CartItem item) {
+        if (userId == null) {
+            Toast.makeText(this, "User ID is null. Cannot add to cart.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String size = selectedSize.getText().toString().replace("Size: ", ""); // Extract selected size
+        if (size.isEmpty()) {
+            Toast.makeText(this, "Please select a size.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         db.collection("users")
-                .document("userId") // Replace with the logged-in user's unique ID
+                .document(userId )
                 .collection("cart")
-                .document(item.getName()) // Use product name or unique ID as the document ID
+                .document(item.getName())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
                         // Item already exists, increment quantity
                         int currentQuantity = documentSnapshot.getLong("quantity").intValue();
                         db.collection("users")
-                                .document("userId")
+                                .document(userId)
                                 .collection("cart")
                                 .document(item.getName())
                                 .update("quantity", currentQuantity + item.getQuantity())
@@ -225,9 +208,10 @@ public class ProductDetailActivity extends AppCompatActivity {
                         cartData.put("name", item.getName());
                         cartData.put("price", item.getPrice());
                         cartData.put("quantity", item.getQuantity());
+                        cartData.put("size", size);
 
                         db.collection("users")
-                                .document("userId")
+                                .document(userId)
                                 .collection("cart")
                                 .document(item.getName())
                                 .set(cartData)

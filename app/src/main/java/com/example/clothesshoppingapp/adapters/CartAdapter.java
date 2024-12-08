@@ -24,12 +24,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     private Context context;
     private final Runnable updateSummaryCallback;
     private FirebaseFirestore db;
+    private String userId;
 
-    public CartAdapter(Context context, List<CartItem> cartItems, Runnable updateSummaryCallback) {
+    public CartAdapter(Context context, List<CartItem> cartItems, Runnable updateSummaryCallback, String userId) {
         this.context = context;
         this.cartItems = cartItems;
         this.updateSummaryCallback = updateSummaryCallback;
         this.db = FirebaseFirestore.getInstance();
+        this.userId = userId;
     }
 
     @NonNull
@@ -88,8 +90,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     }
 
     private void updateItemInFirestore(CartItem item) {
+        if (userId == null) {
+            Toast.makeText(context, "User ID is null. Cannot update item.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         db.collection("users")
-                .document("userId") // Replace with the logged-in user's unique ID
+                .document(userId)
                 .collection("cart")
                 .document(item.getName())
                 .update("quantity", item.getQuantity())
@@ -99,8 +106,13 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
 
 
     private void deleteItemFromFirestore(CartItem item) {
+        if (userId == null) {
+            Toast.makeText(context, "User ID is null. Cannot delete item.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         db.collection("users")
-                .document("userId") // Replace with the logged-in user's unique ID
+                .document(userId)
                 .collection("cart")
                 .document(item.getName())
                 .delete()

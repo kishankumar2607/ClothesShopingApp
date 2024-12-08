@@ -20,6 +20,8 @@ import com.example.clothesshoppingapp.R;
 import com.example.clothesshoppingapp.activities.CheckoutActivity;
 import com.example.clothesshoppingapp.adapters.CartAdapter;
 import com.example.clothesshoppingapp.models.CartItem;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.DecimalFormat;
@@ -31,6 +33,7 @@ public class CartFragment extends Fragment {
     private static final List<CartItem> cartItems = new ArrayList<>();
     private CartAdapter cartAdapter;
     private FirebaseFirestore db;
+    private String userId;
 
     private RecyclerView recyclerView;
     private TextView totalItemsTextView, subTotalTextView, taxTextView, deliveryTextView, totalTextView, emptyCartMessage;
@@ -45,6 +48,14 @@ public class CartFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_cart, container, false);
 
         db = FirebaseFirestore.getInstance();
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+
+        if (currentUser != null) {
+            userId = currentUser.getUid();
+        }else {
+            Toast.makeText(getContext(), "User not logged in!", Toast.LENGTH_SHORT).show();
+        }
 
         recyclerView = view.findViewById(R.id.cartRecyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -67,7 +78,7 @@ public class CartFragment extends Fragment {
             }
         });
 
-        cartAdapter = new CartAdapter(getContext(), cartItems, this::fetchCartItems);
+        cartAdapter = new CartAdapter(getContext(), cartItems, this::updateSummary, userId);
         recyclerView.setAdapter(cartAdapter);
 
         fetchCartItems();
@@ -75,19 +86,9 @@ public class CartFragment extends Fragment {
         return view;
     }
 
-    public static void addToCart(CartItem newItem) {
-        for (CartItem item : cartItems) {
-            if (item.getName().equals(newItem.getName())) {
-                item.setQuantity(item.getQuantity() + 1);
-                return;
-            }
-        }
-        cartItems.add(newItem);
-    }
-
     private void fetchCartItems() {
         db.collection("users")
-                .document("userId")
+                .document(userId)
                 .collection("cart")
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
