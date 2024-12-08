@@ -175,34 +175,41 @@ public class ProductDetailActivity extends AppCompatActivity {
             return;
         }
 
-        String size = selectedSize.getText().toString().replace("Size: ", ""); // Extract selected size
+        String size = selectedSize.getText().toString().replace("Size: ", "");
         if (size.isEmpty()) {
             Toast.makeText(this, "Please select a size.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         db.collection("users")
-                .document(userId )
+                .document(userId)
                 .collection("cart")
                 .document(item.getName())
                 .get()
                 .addOnSuccessListener(documentSnapshot -> {
                     if (documentSnapshot.exists()) {
-                        // Item already exists, increment quantity
+                        // Product already exists in the cart
                         int currentQuantity = documentSnapshot.getLong("quantity").intValue();
-                        db.collection("users")
-                                .document(userId)
-                                .collection("cart")
-                                .document(item.getName())
-                                .update("quantity", currentQuantity + item.getQuantity())
-                                .addOnSuccessListener(aVoid -> {
-                                    Toast.makeText(this, "Quantity updated in cart!", Toast.LENGTH_SHORT).show();
-                                })
-                                .addOnFailureListener(e -> {
-                                    Toast.makeText(this, "Failed to update quantity.", Toast.LENGTH_SHORT).show();
-                                });
+                        int updatedQuantity = currentQuantity + item.getQuantity();
+
+                        if (updatedQuantity > 10) {
+                            Toast.makeText(this, "Cannot add more than 10 items of the same product.", Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Update the existing product's quantity
+                            db.collection("users")
+                                    .document(userId)
+                                    .collection("cart")
+                                    .document(item.getName())
+                                    .update("quantity", updatedQuantity)
+                                    .addOnSuccessListener(aVoid -> {
+                                        Toast.makeText(this, "Quantity updated in cart!", Toast.LENGTH_SHORT).show();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(this, "Failed to update quantity.", Toast.LENGTH_SHORT).show();
+                                    });
+                        }
                     } else {
-                        // Item does not exist, add it as a new entry
+                        // Product does not exist in the cart, add it as a new entry
                         Map<String, Object> cartData = new HashMap<>();
                         cartData.put("imageUrl", item.getImageUrl());
                         cartData.put("name", item.getName());
@@ -227,6 +234,7 @@ public class ProductDetailActivity extends AppCompatActivity {
                     Toast.makeText(this, "Failed to check existing cart item.", Toast.LENGTH_SHORT).show();
                 });
     }
+
 
     private void displayProductDetails() {
         String imageUrl = getIntent().getStringExtra("imageUrl");
