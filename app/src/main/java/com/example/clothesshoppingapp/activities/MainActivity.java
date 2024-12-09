@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         FirebaseApp.initializeApp(this);
 
         bottomNavigationView = findViewById(R.id.bottomNavView);
-        frameLayout = findViewById(R.id.frameLayout);
+        frameLayout = findViewById(R.id.fragment_container);
         TextView headerText = findViewById(R.id.header_text);
 
         Window window = getWindow();
@@ -79,9 +79,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
 
         if (isAppInitialized){
-            fragmentTransaction.add(R.id.frameLayout, fragment);
+            fragmentTransaction.add(R.id.fragment_container, fragment);
         }else {
-            fragmentTransaction.replace(R.id.frameLayout, fragment);
+            fragmentTransaction.replace(R.id.fragment_container, fragment);
         }
 
         fragmentTransaction.commit();

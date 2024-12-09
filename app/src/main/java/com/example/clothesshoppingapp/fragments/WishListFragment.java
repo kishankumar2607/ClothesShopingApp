@@ -11,12 +11,10 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.clothesshoppingapp.models.Product;
-import com.example.clothesshoppingapp.adapters.ProductAdapter;
 import com.example.clothesshoppingapp.R;
-import com.google.firebase.firestore.CollectionReference;
+import com.example.clothesshoppingapp.adapters.ProductAdapter;
+import com.example.clothesshoppingapp.models.Product;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,24 +43,23 @@ public class WishListFragment extends Fragment {
     }
 
     private void fetchProductsFromFirestore() {
-        CollectionReference productsRef = db.collection("products");
-        productsRef.get().addOnCompleteListener(task -> {
+        db.collection("products").get().addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
-                QuerySnapshot snapshot = task.getResult();
-                if (snapshot != null) {
-                    productList.clear();
-                    productList.addAll(snapshot.toObjects(Product.class));
+                productList.clear();
+                productList.addAll(task.getResult().toObjects(Product.class));
 
-                    int productCount = productList.size();
-                    productCountText.setText(productCount + "+ Products");
-
+                if (adapter == null) {
                     adapter = new ProductAdapter(getContext(), productList, product -> {
                         Toast.makeText(getContext(), "Clicked: " + product.getName(), Toast.LENGTH_SHORT).show();
                     });
                     wishListRecyclerView.setAdapter(adapter);
+                } else {
+                    adapter.notifyDataSetChanged();
                 }
+
+                productCountText.setText(productList.size() + " Products");
             } else {
-                Toast.makeText(getContext(), "Failed to load products: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Failed to fetch products.", Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -91,25 +91,11 @@ public class HomeFragment extends Fragment {
 
         setLastDate("30/11/2024");
 
-        shopNowButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Shop Now clicked!", Toast.LENGTH_SHORT).show();
-        });
-
-        viewAllButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "View all deals clicked!", Toast.LENGTH_SHORT).show();
-        });
-
-        viewAllTrendingButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "View all Trending deals clicked!", Toast.LENGTH_SHORT).show();
-        });
-
-        visitButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Visit now clicked!", Toast.LENGTH_SHORT).show();
-        });
-
-        viewAllNewArrivalsButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "View all clicked!", Toast.LENGTH_SHORT).show();
-        });
+        shopNowButton.setOnClickListener(v -> navigateToWishListFragment());
+        viewAllButton.setOnClickListener(v -> navigateToWishListFragment());
+        viewAllTrendingButton.setOnClickListener(v -> navigateToWishListFragment());
+        visitButton.setOnClickListener(v -> navigateToWishListFragment());
+        viewAllNewArrivalsButton.setOnClickListener(v -> navigateToWishListFragment());
 
         return view;
     }
@@ -120,18 +106,17 @@ public class HomeFragment extends Fragment {
                 horizontalProductList.clear();
                 gridProductList.clear();
 
+                int productCount = 0;
+
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     try {
                         Product product = document.toObject(Product.class);
-
-//                        if (product != null) {
-//                            if (product.getSize() == null) {
-//                                System.out.println("Size is null for product: " + product.getName());
-//                            }
-
                             horizontalProductList.add(product);
-                            gridProductList.add(product);
-//                        }
+
+                            if (productCount < 10) {
+                                gridProductList.add(product);
+                                productCount++;
+                            }
                     } catch (Exception e) {
                         System.out.println("Error parsing product: " + e.getMessage());
                     }
@@ -174,4 +159,12 @@ public class HomeFragment extends Fragment {
         dealDate.setText(formattedDate);
     }
 
+    private void navigateToWishListFragment() {
+        requireActivity()
+                .getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, new WishListFragment())
+                .addToBackStack(null)
+                .commit();
+    }
 }

@@ -73,7 +73,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         holder.itemView.setOnClickListener(v -> {
             if (context != null) {
-                Intent intent = new Intent(context, ProductDetailActivity.class);
+                Intent intent                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                = new Intent(context, ProductDetailActivity.class);
 
                 intent.putExtra("imageUrl", product.getImageUrl());
                 intent.putExtra("name", product.getName());
