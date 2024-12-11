@@ -1,5 +1,6 @@
 package com.example.clothesshoppingapp.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,7 +35,8 @@ public class WishListFragment extends Fragment {
         wishListRecyclerView = view.findViewById(R.id.wishListRecyclerView);
         productCountText = view.findViewById(R.id.productCountText);
 
-        wishListRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        int spanCount = getSpanCount();
+        wishListRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
 
         db = FirebaseFirestore.getInstance();
         fetchProductsFromFirestore();
@@ -62,5 +64,10 @@ public class WishListFragment extends Fragment {
                 Toast.makeText(getContext(), "Failed to fetch products.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private int getSpanCount() {
+        int orientation = getResources().getConfiguration().orientation;
+        return (orientation == Configuration.ORIENTATION_LANDSCAPE) ? 4 : 2;
     }
 }

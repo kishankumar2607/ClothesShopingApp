@@ -82,6 +82,7 @@ public class PaymentActivity extends AppCompatActivity {
             cardNumber.requestFocus();
             return false;
         }
+
         if (cardNum.length() != 16) {
             cardNumber.setError("Card number must be 16 digits");
             cardNumber.requestFocus();

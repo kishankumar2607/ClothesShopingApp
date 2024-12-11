@@ -25,4 +25,15 @@
         android:gravity="center"
         android:textColor="@android:color/black"
         android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/successOrderMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Order Placed."
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:textColor="@android:color/black"
+        android:layout_marginTop="16dp" />
 </LinearLayout>

@@ -1,5 +1,6 @@
 package com.example.clothesshoppingapp.fragments;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -43,7 +44,8 @@ public class SearchFragment extends Fragment {
         noProductsFoundText = view.findViewById(R.id.noProductsFoundText);
         searchView = view.findViewById(R.id.searchView);
 
-        wishListRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        int spanCount = getSpanCount();
+        wishListRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), spanCount));
 
         db = FirebaseFirestore.getInstance();
         fetchProductsFromFirestore();
@@ -116,5 +118,10 @@ public class SearchFragment extends Fragment {
 
     private void updateProductCount() {
         productCountText.setText(filteredList.size() + " Products");
+    }
+
+    private int getSpanCount() {
+        int orientation = getResources().getConfiguration().orientation;
+        return (orientation == Configuration.ORIENTATION_LANDSCAPE) ? 4 : 2;
     }
 }
